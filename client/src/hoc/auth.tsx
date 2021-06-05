@@ -14,7 +14,8 @@ const Auth = (SpecificComponent: any, authority: (boolean | null) = null) => {
     const AuthenticationCheck = (props: any) => {
         const dispatch = useDispatch();
 
-        const origin = window.sessionStorage.getItem('tokenId') || '';
+        const origin = window.sessionStorage.getItem('tokenId') || '""';
+
         let tokenId = '';
         if (typeof origin === 'string') {
             tokenId = JSON.parse(origin);
@@ -22,7 +23,7 @@ const Auth = (SpecificComponent: any, authority: (boolean | null) = null) => {
 
         const loginCheck = async () => {
             const res = await dispatch(auth(tokenId));
-            console.log(res);
+
             if (!res.payload.isLogin) {
                 // 로그인하지 않은 경우
                 if (authority) {

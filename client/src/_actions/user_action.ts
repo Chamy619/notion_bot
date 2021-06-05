@@ -3,6 +3,7 @@ import {
     LOGIN_USER,
     AUTH_USER
 } from './types';
+import { server } from '../api/address';
 
 interface iLoginRequest {
     email: string,
@@ -11,7 +12,7 @@ interface iLoginRequest {
 };
 
 export const loginUser = async (tokenId: string, body: iLoginRequest) => {
-    const response = await axios.post('http://localhost:5000/api/user/login', body, {
+    const response = await axios.post(`${server}/api/user/login`, body, {
         headers: {
             authorization: tokenId
         }
@@ -24,7 +25,7 @@ export const loginUser = async (tokenId: string, body: iLoginRequest) => {
 }
 
 export const auth = async (tokenId: string) => {
-    const response = await axios.get('http://localhost:5000/api/user/auth', {
+    const response = await axios.get(`${server}/api/user/auth`, {
         headers: {
             authorization: tokenId
         }

@@ -3,6 +3,7 @@ import GoogleLogin from 'react-google-login';
 import { loginUser } from '../../_actions/user_action';
 import { useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { googleApiKey } from '../../api/key';
 
 const LoginPage: React.FC = (props: any) => {
     const dispatch = useDispatch();
@@ -31,7 +32,7 @@ const LoginPage: React.FC = (props: any) => {
 
     return (
         <GoogleLogin
-            clientId='1054457717031-siahmpds0mfi0mqk5eb1vn91bmf40kna.apps.googleusercontent.com'
+            clientId={googleApiKey}
             onSuccess={googleLoginSuccess}
             onFailure={googleLoginFailure}
             cookiePolicy={'single_host_origin'}
