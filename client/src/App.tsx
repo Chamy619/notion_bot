@@ -1,14 +1,22 @@
 import React from 'react';
+import {
+  BrowserRouter as Router,
+  Route
+} from 'react-router-dom';
+import LoginPage from './components/LoginPage/LoginPage';
 import Editor from './components/Editor/Editor';
+import Auth from './hoc/auth';
 
-function App() {
+const App: React.FC = () => {
   return (
     <div className="App">
       <h1>우아한 테크러닝</h1>
-      {/* <div contentEditable="true"><b>안녕하세요</b> 저는 양채훈입니다.</div> */}
-      <Editor />
+      <Router>
+        <Route exact path="/" component={Auth(LoginPage, false)} />
+        <Route exact path="/editor" component={Auth(Editor, true)} />
+      </Router>
     </div>
-  );
+  )
 }
 
 export default App;
