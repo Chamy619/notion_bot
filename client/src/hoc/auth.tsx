@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { auth } from '../_actions/user_action';
+import { getTokenId } from '../utils/storage';
 
 /**
  * 
@@ -14,12 +15,7 @@ const Auth = (SpecificComponent: any, authority: (boolean | null) = null) => {
     const AuthenticationCheck = (props: any) => {
         const dispatch = useDispatch();
 
-        const origin = window.sessionStorage.getItem('tokenId') || '""';
-
-        let tokenId = '';
-        if (typeof origin === 'string') {
-            tokenId = JSON.parse(origin);
-        }
+        const tokenId = getTokenId();
 
         const loginCheck = async () => {
             const res = await dispatch(auth(tokenId));
