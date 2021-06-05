@@ -4,6 +4,7 @@ import { loginUser } from '../../_actions/user_action';
 import { useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { googleApiKey } from '../../api/key';
+import { setTokenId } from '../../utils/storage';
 
 const LoginPage: React.FC = (props: any) => {
     const dispatch = useDispatch();
@@ -21,7 +22,7 @@ const LoginPage: React.FC = (props: any) => {
         if (!res.payload.success) {
             googleLoginFailure();
         } else {
-            window.sessionStorage.setItem('tokenId', JSON.stringify(tokenId));
+            setTokenId(tokenId);
             props.history.push('/editor');
         }
     }

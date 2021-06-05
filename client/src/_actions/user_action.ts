@@ -1,6 +1,7 @@
 import axios from 'axios'
 import {
     LOGIN_USER,
+    LOGOUT_USER,
     AUTH_USER
 } from './types';
 import { server } from '../api/address';
@@ -20,6 +21,19 @@ export const loginUser = async (tokenId: string, body: iLoginRequest) => {
 
     return ({
         type: LOGIN_USER,
+        payload: response.data
+    });
+}
+
+export const logoutUser = async (tokenId: string) => {
+    const response = await axios.get(`${server}/api/user/logout`, {
+        headers: {
+            authorization: tokenId
+        }
+    });
+
+    return ({
+        type: LOGOUT_USER,
         payload: response.data
     });
 }
