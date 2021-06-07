@@ -25,6 +25,17 @@ export const loginUser = async (tokenId: string, body: iLoginRequest) => {
     });
 }
 
+export const naverLoginUser = async (tokenId: string) => {
+    const response = await axios.post(`${server}/api/user/naver/login`, {
+        access_token: tokenId
+    });
+
+    return ({
+        type: LOGIN_USER,
+        payload: response.data
+    });
+}
+
 export const logoutUser = async (tokenId: string) => {
     const response = await axios.get(`${server}/api/user/logout`, {
         headers: {
