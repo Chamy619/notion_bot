@@ -6,10 +6,11 @@ import {
 } from './types';
 import { server } from '../api/address';
 
+// 네이버 로그인의 경우 빈 객체 전달
 interface iLoginRequest {
-    email: string,
-    name: string,
-    image: string
+    email?: string,
+    name?: string,
+    image?: string
 };
 
 export const loginUser = async (tokenId: string, body: iLoginRequest) => {
@@ -17,17 +18,6 @@ export const loginUser = async (tokenId: string, body: iLoginRequest) => {
         headers: {
             authorization: tokenId
         }
-    });
-
-    return ({
-        type: LOGIN_USER,
-        payload: response.data
-    });
-}
-
-export const naverLoginUser = async (tokenId: string) => {
-    const response = await axios.post(`${server}/api/user/naver/login`, {
-        access_token: tokenId
     });
 
     return ({

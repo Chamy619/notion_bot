@@ -12,7 +12,7 @@ import { getTokenId } from '../utils/storage';
  *      null: 출입 제한 없음
  */
 const Auth = (SpecificComponent: any, authority: (boolean | null) = null) => {
-    const AuthenticationCheck = (props: any) => {
+    const AuthenticationCheck: React.FC = (props: any) => {
         const dispatch = useDispatch();
 
         const tokenId = getTokenId();
