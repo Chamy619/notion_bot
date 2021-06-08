@@ -2,6 +2,26 @@
 
 우아한 테크러닝 4기 교육을 위한 Repository 입니다.
 
+## 클라이언트 실행
+
+1. client/src 디렉터리 내에 `api` 디렉터리를 생성하세요.
+
+2. `api` 디렉터리 내에 `address.ts` 파일과 `key.ts` 파일을 생성하세요.
+
+3. `/client/src/api/address.ts`
+
+   ```typescript
+   export const server: string = 'http://localhost:5000';
+   ```
+
+   
+
+4. `client/src/api/key.ts`
+
+   ```typescript
+   export const googleApiKey: string: '구글 클라이언트 아이디.apps.googleusercontent.com';
+   export const naverApiKey: string = '네이버 클라이언트 아이디';
+
 ## 목표
 
 1. 로그인을 회원 서비스
