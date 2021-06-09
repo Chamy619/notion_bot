@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { loginUser } from '../../_actions/user_action';
 import { useDispatch } from 'react-redux';
@@ -9,10 +9,9 @@ const NaverLoginGetProfile: React.FC = () => {
     const location = useLocation().hash;
     const access_token = location.split('=')[1].split('&')[0];
 
-    const naverLogin = async () => {
+    const naverLogin = useCallback(async () => {
         const res = await dispatch(loginUser(access_token, {}));
         const { opener } = window as any;
-
         if (!res.payload.success) {
             opener.alert('로그인에 실패했습니다.');
         } else {
@@ -20,11 +19,11 @@ const NaverLoginGetProfile: React.FC = () => {
             opener.sessionStorage.setItem('tokenId', JSON.stringify(access_token));
         }
         window.close();
-    }
+    }, [dispatch, access_token])
 
     useEffect(() => {
         naverLogin();
-    }, []);
+    }, [naverLogin]);
 
     return (
         <div>

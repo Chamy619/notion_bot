@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 
 const {naver} = window as any;
 
-const NaverLoginButton: React.FC = (props: any) => {
+const NaverLoginButton: React.FC = () => {
     const initializeNaverLogin = () => {
         const naverLogin = new naver.LoginWithNaverId({
             clientId: 'bFYiCuz1OTwiPsSA7c7z',

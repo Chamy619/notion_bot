@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { auth } from '../_actions/user_action';
 import { getTokenId } from '../utils/storage';
@@ -17,7 +17,7 @@ const Auth = (SpecificComponent: any, authority: (boolean | null) = null) => {
 
         const tokenId = getTokenId();
 
-        const loginCheck = async () => {
+        const loginCheck = useCallback(async () => {
             const res = await dispatch(auth(tokenId));
 
             if (!res.payload.isLogin) {
@@ -31,11 +31,11 @@ const Auth = (SpecificComponent: any, authority: (boolean | null) = null) => {
                     props.history.push('/editor');
                 }
             }
-        }
+        }, [tokenId, dispatch, props.history]);
 
         useEffect(() => {
             loginCheck();
-        }, []);
+        }, [loginCheck]);
 
         return <SpecificComponent />;
     }

@@ -1,12 +1,17 @@
 import React from 'react';
 import GoogleLogin from 'react-google-login';
-import {loginUser} from '../../_actions/user_action';
-import {useDispatch} from 'react-redux';
-import {withRouter} from 'react-router-dom';
-import {googleApiKey} from '../../api/key';
-import {setTokenId} from '../../utils/storage';
+import { loginUser } from '../../_actions/user_action';
+import { useDispatch } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { googleApiKey } from '../../api/key';
+import { setTokenId } from '../../utils/storage';
+import { History } from 'history';
 
-const GoogleLoginButton: React.FC = (props: any) => {
+interface Props {
+    history: History;
+}
+
+const GoogleLoginButton: React.FC<Props> = props => {
     const dispatch = useDispatch();
 
     const googleLoginSuccess = async (response: any) => {
@@ -36,7 +41,9 @@ const GoogleLoginButton: React.FC = (props: any) => {
             clientId={googleApiKey}
             onSuccess={googleLoginSuccess}
             onFailure={googleLoginFailure}
+            buttonText="구글 아이디로 로그인"
             cookiePolicy={'single_host_origin'}
+            theme="dark"
         />
     );
 }
