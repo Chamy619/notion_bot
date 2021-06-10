@@ -11,7 +11,7 @@ interface Props {
     history: History;
 }
 
-const Editor: React.FC<Props> = props => {
+const LogoutButton: React.FC<Props> = props => {
     const dispatch = useDispatch();
 
     const googleLogoutSuccess = async () => {
@@ -41,4 +41,4 @@ const Editor: React.FC<Props> = props => {
     )
 }
 
-export default withRouter(Editor);
+export default withRouter(LogoutButton);
