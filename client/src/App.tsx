@@ -7,11 +7,17 @@ import LoginPage from './components/LoginPage/LoginPage';
 import EditorPage from './components/Editor/EditorPage';
 import Auth from './hoc/auth';
 import NaverLoginGetProfile from './components/LoginPage/NaverLoginGetProfile';
+import styled from 'styled-components';
+
+const Container = styled.div`
+  margin: 0 auto;
+  height: 100vh;
+  width: 100%;
+`;
 
 const App: React.FC = () => {
   return (
-    <div className="App">
-      <h1>우아한 테크러닝</h1>
+    <Container>
       <Router>
         <Route exact path="/" component={Auth(LoginPage, false)} />
         <Route exact path="/editor" component={Auth(EditorPage, true)} />
@@ -19,7 +25,7 @@ const App: React.FC = () => {
           <NaverLoginGetProfile />
         </Route>
       </Router>
-    </div>
+    </Container>
   )
 }
 

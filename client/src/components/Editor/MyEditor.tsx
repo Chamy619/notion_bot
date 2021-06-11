@@ -35,6 +35,12 @@ const StyledMenu = styled(Menu)`
   transition: opacity 0.75s;
 `;
 
+const StyledEditable = styled(Editable)`
+  width: 50%;
+  margin: 0 auto;
+  height: auto;
+`;
+
 const MyEditor: React.FC = () => {
   const editor = useMemo(() => withHistory(withReact(createEditor())), []);
   const [value, setValue] = useState<Descendant[]>(initialValue);
@@ -100,13 +106,7 @@ const MyEditor: React.FC = () => {
       onChange={(newValue) => setValue(newValue)}
     >
       <Toolbar />
-      <Editable
-        style={{
-          width: '50%',
-          border: '1px solid #DDD',
-          margin: '0 auto',
-          height: '50vh'
-        }}
+      <StyledEditable
         renderElement={renderElement}
         renderLeaf={renderLeaf}
         onKeyDown={onKeyDownHandler}
