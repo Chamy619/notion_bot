@@ -2,6 +2,7 @@ import React, { Ref, PropsWithChildren } from 'react'
 import ReactDOM from 'react-dom'
 import { BiBold, BiUnderline, BiItalic } from 'react-icons/bi';
 import { cx, css } from '@emotion/css'
+import styled from 'styled-components';
 
 interface BaseProps {
     className: string;
@@ -9,6 +10,16 @@ interface BaseProps {
 }
 
 type OrNull<T> = T | null;
+
+type ButtonType = {
+    reversed: (boolean | undefined);
+    active: (boolean | undefined);
+}
+
+const StyledButton = styled.span<ButtonType>`
+    cursor: pointer;
+    color: ${props => props.reversed ? (props.active ? 'white' : '#aaa') : (props.active ? 'black' : '#ccc')}
+`;
 
 export const Button = React.forwardRef(
     (
@@ -24,26 +35,8 @@ export const Button = React.forwardRef(
             } & BaseProps
         >,
         ref: any
-    ) => {
-        return (
-            <span
-                {...props}
-                ref={ref}
-                className={cx(
-                    className,
-                    css`
-            cursor: pointer;
-            color: ${reversed
-                            ? active
-                                ? 'white'
-                                : '#aaa'
-                            : active
-                                ? 'black'
-                                : '#ccc'};
-            `
-                )}
-            />
-    )}
+    ) => <StyledButton {...props} ref={ref} reversed={reversed} active={active} />     
+    
 )
 
 export const EditorValue = React.forwardRef(
@@ -70,36 +63,36 @@ export const EditorValue = React.forwardRef(
                 className={cx(
                     className,
                     css`
-            margin: 30px -20px 0;
-          `
+                        margin: 30px -20px 0;
+                    `
                 )}
             >
                 <div
                     className={css`
-            font-size: 14px;
-            padding: 5px 20px;
-            color: #404040;
-            border-top: 2px solid #eeeeee;
-            background: #f8f8f8;
-          `}
+                        font-size: 14px;
+                        padding: 5px 20px;
+                        color: #404040;
+                        border-top: 2px solid #eeeeee;
+                        background: #f8f8f8;
+                    `}
                 >
                     Slate's value as text
-        </div>
+                </div>
                 <div
                     className={css`
-            color: #404040;
-            font: 12px monospace;
-            white-space: pre-wrap;
-            padding: 10px 20px;
-            div {
-              margin: 0 0 0.5em;
-            }
-          `}
+                        color: #404040;
+                        font: 12px monospace;
+                        white-space: pre-wrap;
+                        padding: 10px 20px;
+                        div {
+                        margin: 0 0 0.5em;
+                        }
+                    `}
                 >
                     {textLines}
                 </div>
             </div>
-        )
+        );
     }
 )
 
@@ -152,27 +145,20 @@ export const Instruction = React.forwardRef(
     )
 )
 
+const StyledMenu = styled.div`
+    & > * {
+        display: inline-block;
+    }
+    & > * + * {
+        margin-left: 15px;
+    }
+`;
+
 export const Menu = React.forwardRef(
     (
         { className, ...props }: PropsWithChildren<BaseProps>,
         ref: any
-    ) => (
-        <div
-            {...props}
-            ref={ref}
-            className={cx(
-                className,
-                css`
-                & > * {
-                    display: inline-block;
-                }
-                & > * + * {
-                    margin-left: 15px;
-                }
-                `
-            )}
-        />
-    )
+    ) => <StyledMenu {...props} ref={ref} className={className} />
 )
 
 export const Portal = ({ children }: any) => {
@@ -192,12 +178,12 @@ export const Toolbar = React.forwardRef(
             className={cx(
                 className,
                 css`
-          position: relative;
-          padding: 1px 18px 17px;
-          margin: 0 -20px;
-          border-bottom: 2px solid #eee;
-          margin-bottom: 20px;
-        `
+                    position: relative;
+                    padding: 1px 18px 17px;
+                    margin: 0 -20px;
+                    border-bottom: 2px solid #eee;
+                    margin-bottom: 20px;
+                `
             )}
         />
     )

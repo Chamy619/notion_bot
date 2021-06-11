@@ -1,13 +1,23 @@
 import React from 'react';
-import GoogleLoginButton from './GoogleLoginButton';
-import NaverLoginButton from './NaverLoginButton';
+import styled from 'styled-components';
+import Header from './Header';
+import LoginButton from './LoginButton';
+
+const Container = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+`;
 
 const LoginPage: React.FC = () => {
     return (
-        <div>
-            <GoogleLoginButton />
-            <NaverLoginButton />
-        </div>
+        <Container>
+            <Header />
+            <LoginButton type={'google'} />
+            <LoginButton type={'naver'} />
+        </Container>
     )
 }
 
