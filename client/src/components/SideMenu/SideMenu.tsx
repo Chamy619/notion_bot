@@ -1,6 +1,6 @@
 import React from 'react';
 import style from 'styled-components';
-import UserInfo from './UserInfo';
+import Header from './Header';
 
 const StyledSideMenu = style.div`
     background-color: #ffc078;
@@ -11,7 +11,7 @@ const StyledSideMenu = style.div`
 const SideMenu: React.FC = () => {
     return (
         <StyledSideMenu>
-            <UserInfo />
+            <Header />
         </StyledSideMenu>
     );
 }
