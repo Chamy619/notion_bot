@@ -1,14 +1,19 @@
 import React from 'react';
 import style from 'styled-components';
-import { Button } from '../Fragments/Button';
+import UserInfo from './UserInfo';
 
 const StyledSideMenu = style.div`
     background-color: #ffc078;
     height: 100vh;
+    width: 20em;
 `;
 
 const SideMenu: React.FC = () => {
-    return <StyledSideMenu><Button color={'red'} size={'medium'}>로그아웃</Button></StyledSideMenu>
+    return (
+        <StyledSideMenu>
+            <UserInfo />
+        </StyledSideMenu>
+    );
 }
 
 export default SideMenu;
