@@ -1,43 +1,34 @@
 import React from 'react';
 import style from 'styled-components';
-import { getTokenId } from '../../utils/storage';
-import { useDispatch } from 'react-redux';
-import { logoutUser } from '../../_actions/user_action';
-import { Button } from '../Fragments/Button';
-import { History } from 'history';
-import { withRouter } from 'react-router-dom';
+import { getUserInfo } from '../../utils/storage';
 
 const Container = style.div`
-    width: 100%;
     display: flex;
-    justify-content: space-between;
+    align-items: center;
 `;
 
-interface Props {
-    history: History;
-}
+const userInfo = getUserInfo();
+const imageUrl = userInfo.image;
+const name = userInfo.name;
 
-const UserInfo: React.FC<Props> = (props) => {
-    const dispatch = useDispatch();
+const Image = style.div`
+    background: url(${imageUrl});
+    background-size: 100%;
+    background-repeat: no-repeat;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 0.3rem;
+    margin-left: 0.3rem;
+`;
 
-    const onClick = async () => {
-        const tokenId = getTokenId();
 
-        const res = await dispatch(logoutUser(tokenId));
-
-        if (!res.payload.success) {
-            alert('로그아웃에 실패했습니다.')
-        } else {
-            props.history.push('/');
-        }
-    }
-
+const UserInfo: React.FC = () => {
     return (
         <Container>
-            <div>00의 Notion</div>
-            <Button color={'red'} size={'small'} onClick={onClick}>로그아웃</Button>
+            <Image />
+            {name}의 노션
         </Container>
-    )
+    );
 }
 
-export default withRouter(UserInfo);
+export default UserInfo;

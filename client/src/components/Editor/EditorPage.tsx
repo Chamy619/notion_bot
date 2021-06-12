@@ -1,5 +1,4 @@
 import React from 'react';
-import LogoutButton from './LogoutButton';
 import MyEditor from './MyEditor';
 import SideMenu from '../SideMenu/SideMenu';
 import style from 'styled-components';

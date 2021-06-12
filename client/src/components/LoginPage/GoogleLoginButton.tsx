@@ -4,7 +4,7 @@ import { loginUser } from '../../_actions/user_action';
 import { useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { googleApiKey } from '../../api/key';
-import { setTokenId } from '../../utils/storage';
+import { setTokenId, setUserInfo } from '../../utils/storage';
 import { History } from 'history';
 
 interface Props {
@@ -28,6 +28,7 @@ const GoogleLoginButton: React.FC<Props> = (props) => {
             googleLoginFailure();
         } else {
             setTokenId(tokenId);
+            setUserInfo(res.payload.userInfo);
             props.history.push('/editor');
         }
     }

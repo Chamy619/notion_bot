@@ -9,27 +9,15 @@ const NaverLoginGetProfile: React.FC = () => {
     const location = useLocation().hash;
     const access_token = location.split('=')[1].split('&')[0];
 
-    // const naverLogin = async () => {
-    //     const res = await dispatch(loginUser(access_token, {}));
-    //     const { opener } = window as any;
-
-    //     if (!res.payload.success) {
-    //         opener.alert('로그인에 실패했습니다.');
-    //     } else {
-    //         opener.location.href = '/';
-    //         opener.sessionStorage.setItem('tokenId', JSON.stringify(access_token));
-    //     }
-    //     window.close();
-    // }
-
     const naverLogin = useCallback(async () => {
         const res = await dispatch(loginUser(access_token, {}));
-        const {opener} = window as any;
+        const { opener } = window as any;
         if (!res.payload.success) {
             opener.alert('로그인에 실패했습니다.');
         } else {
             opener.location.href = '/';
             opener.sessionStorage.setItem('tokenId', JSON.stringify(access_token));
+            opener.sessionStorage.setItem('userInfo', JSON.stringify(res.payload.userInfo));
         }
         window.close();
     }, [dispatch, access_token])
