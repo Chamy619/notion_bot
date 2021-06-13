@@ -6,7 +6,7 @@ import { logoutUser } from '../../_actions/user_action';
 import UserInfo from './UserInfo';
 import { Button } from '../Fragments/Button';
 import { History } from 'history';
-import { withRouter } from 'react-router-dom';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 const Container = style.div`
     width: 100%;
@@ -16,9 +16,11 @@ const Container = style.div`
 
 interface Props {
     history: History;
+    isHover: boolean;
+    hideSideMenu: () => void;
 }
 
-const Header: React.FC<Props> = (props) => {
+const Header: React.FC<Props & RouteComponentProps> = (props) => {
     const dispatch = useDispatch();
 
     const onClick = async () => {
@@ -35,7 +37,7 @@ const Header: React.FC<Props> = (props) => {
 
     return (
         <Container>
-            <UserInfo />
+            <UserInfo isHover={props.isHover} hideSideMenu={props.hideSideMenu} />
             <Button color={'red'} size={'small'} onClick={onClick}>로그아웃</Button>
         </Container>
     )
