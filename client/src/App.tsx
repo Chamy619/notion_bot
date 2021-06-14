@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  BrowserRouter as Router,
-  Route
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import LoginPage from './components/LoginPage/LoginPage';
 import EditorPage from './components/Editor/EditorPage';
 import Auth from './hoc/auth';
@@ -26,7 +23,7 @@ const App: React.FC = () => {
         </Route>
       </Router>
     </Container>
-  )
-}
+  );
+};
 
 export default App;

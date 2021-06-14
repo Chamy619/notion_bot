@@ -10,34 +10,41 @@ const StyledSideMenu = style.div`
 `;
 
 const SideMenu: React.FC = () => {
-    const [hover, setHover] = useState<boolean>(false);
-    const [collapsed, setCollapsed] = useState<boolean>(false);
+  const [hover, setHover] = useState<boolean>(false);
+  const [collapsed, setCollapsed] = useState<boolean>(false);
 
-    const onMouseOverHandler = () => {
-        setHover(true);
-    }
+  const onMouseOverHandler = () => {
+    setHover(true);
+  };
 
-    const onMouseLeaveHandler = () => {
-        setHover(false);
-    }
+  const onMouseLeaveHandler = () => {
+    setHover(false);
+  };
 
-    const showSideMenu = () => {
-        setCollapsed(false);
-    }
+  const showSideMenu = () => {
+    setCollapsed(false);
+  };
 
-    const hideSideMenu = () => {
-        setCollapsed(true);
-    }
+  const hideSideMenu = () => {
+    setCollapsed(true);
+  };
 
-    if (collapsed) {
-        return <div onClick={showSideMenu}><BiChevronsRight /></div>;
-    }
-
+  if (collapsed) {
     return (
-        <StyledSideMenu onMouseOver={onMouseOverHandler} onMouseLeave={onMouseLeaveHandler}>
-            <Header isHover={hover} hideSideMenu={hideSideMenu} />
-        </StyledSideMenu>
+      <div onClick={showSideMenu}>
+        <BiChevronsRight />
+      </div>
     );
-}
+  }
+
+  return (
+    <StyledSideMenu
+      onMouseOver={onMouseOverHandler}
+      onMouseLeave={onMouseLeaveHandler}
+    >
+      <Header isHover={hover} hideSideMenu={hideSideMenu} />
+    </StyledSideMenu>
+  );
+};
 
 export default SideMenu;

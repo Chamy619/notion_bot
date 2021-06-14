@@ -15,32 +15,34 @@ const Container = style.div`
 `;
 
 interface Props {
-    history: History;
-    isHover: boolean;
-    hideSideMenu: () => void;
+  history: History;
+  isHover: boolean;
+  hideSideMenu: () => void;
 }
 
 const Header: React.FC<Props & RouteComponentProps> = (props) => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    const onClick = async () => {
-        const tokenId = getTokenId();
+  const onClick = async () => {
+    const tokenId = getTokenId();
 
-        const res = await dispatch(logoutUser(tokenId));
+    const res = await dispatch(logoutUser(tokenId));
 
-        if (!res.payload.success) {
-            alert('로그아웃에 실패했습니다.')
-        } else {
-            props.history.push('/');
-        }
+    if (!res.payload.success) {
+      alert('로그아웃에 실패했습니다.');
+    } else {
+      props.history.push('/');
     }
+  };
 
-    return (
-        <Container>
-            <UserInfo isHover={props.isHover} hideSideMenu={props.hideSideMenu} />
-            <Button color={'red'} size={'small'} onClick={onClick}>로그아웃</Button>
-        </Container>
-    )
-}
+  return (
+    <Container>
+      <UserInfo isHover={props.isHover} hideSideMenu={props.hideSideMenu} />
+      <Button color={'red'} size={'small'} onClick={onClick}>
+        로그아웃
+      </Button>
+    </Container>
+  );
+};
 
 export default withRouter(Header);

@@ -16,6 +16,6 @@ const EditorPage: React.FC = () => {
       <MyEditor />
     </Container>
   );
-}
+};
 
 export default EditorPage;

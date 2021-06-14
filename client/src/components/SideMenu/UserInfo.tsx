@@ -9,8 +9,8 @@ const Container = style.div`
 `;
 
 interface Props {
-    isHover: boolean;
-    hideSideMenu: () => void;
+  isHover: boolean;
+  hideSideMenu: () => void;
 }
 
 const userInfo = getUserInfo();
@@ -28,23 +28,22 @@ const Image = style.div`
 `;
 
 const hideButton = (hover: boolean, hideSideMenu: () => void) => {
-    if (hover) {
-        return <BiChevronsLeft onClick={hideSideMenu} />
-    } else {
-        return <div></div>;
-    }
-}
-
+  if (hover) {
+    return <BiChevronsLeft onClick={hideSideMenu} />;
+  } else {
+    return <div></div>;
+  }
+};
 
 const UserInfo: React.FC<Props> = (props) => {
-    const hide = hideButton(props.isHover, props.hideSideMenu);
-    return (
-        <Container>
-            <Image />
-            {name}의 노션
-            {hide}
-        </Container>
-    );
-}
+  const hide = hideButton(props.isHover, props.hideSideMenu);
+  return (
+    <Container>
+      <Image />
+      {name}의 노션
+      {hide}
+    </Container>
+  );
+};
 
 export default UserInfo;
