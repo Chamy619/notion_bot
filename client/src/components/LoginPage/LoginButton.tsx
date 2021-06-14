@@ -10,28 +10,24 @@ const Container = style.div`
 `;
 
 interface Props {
-    type: ('google' | 'naver' | undefined);
+  type: 'google' | 'naver' | undefined;
 }
 
-const LoginButton: React.FC<Props> = props => {
-    let button: Object;
-    switch(props.type) {
-        case 'google':
-            button = <GoogleLoginButton />
-            break;
-        case 'naver':
-            button = <NaverLoginButton />
-            break;
-        default:
-            button = <span>오류가 발생했습니다.</span>
-            break;
-    }
+const LoginButton: React.FC<Props> = (props) => {
+  let button: Object;
+  switch (props.type) {
+    case 'google':
+      button = <GoogleLoginButton />;
+      break;
+    case 'naver':
+      button = <NaverLoginButton />;
+      break;
+    default:
+      button = <span>오류가 발생했습니다.</span>;
+      break;
+  }
 
-    return (
-        <Container>
-            {button}
-        </Container>
-    );
+  return <Container>{button}</Container>;
 };
 
 export default LoginButton;

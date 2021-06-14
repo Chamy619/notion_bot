@@ -1,9 +1,33 @@
-import React, { useMemo, useState, useCallback, useRef, useEffect } from "react";
-import { createEditor, Transforms, Editor, Text, Element, BaseEditor, Descendant, Range, Node } from "slate";
-import { Slate, Editable, withReact, ReactEditor, RenderLeafProps, RenderElementProps, useSlate } from "slate-react";
+import React, {
+  useMemo,
+  useState,
+  useCallback,
+  useRef,
+  useEffect,
+} from 'react';
+import {
+  createEditor,
+  Transforms,
+  Editor,
+  Text,
+  Element,
+  BaseEditor,
+  Descendant,
+  Range,
+  Node,
+} from 'slate';
+import {
+  Slate,
+  Editable,
+  withReact,
+  ReactEditor,
+  RenderLeafProps,
+  RenderElementProps,
+  useSlate,
+} from 'slate-react';
 import { withHistory } from 'slate-history';
 
-import { Button, Icon, Menu, Portal } from './EditorUtils'
+import { Button, Icon, Menu, Portal } from './EditorUtils';
 
 import styled from 'styled-components';
 
@@ -11,8 +35,13 @@ import Block from './Block';
 import Leaf from './Leaf';
 
 // 타입 정의
-type CustomElement = { type: string; children: CustomText[]; };
-type CustomText = { text: string; bold?: boolean; italic?: boolean; underlined?: boolean; };
+type CustomElement = { type: string; children: CustomText[] };
+type CustomText = {
+  text: string;
+  bold?: boolean;
+  italic?: boolean;
+  underlined?: boolean;
+};
 
 declare module 'slate' {
   interface CustomTypes {
@@ -47,7 +76,7 @@ const MyEditor: React.FC = () => {
 
   // Block 단위의 변화가 있을 때 기존에 만든 구문으로 변환시켜줌
   const renderElement = useCallback((props: RenderElementProps) => {
-    return <Block {...props} />
+    return <Block {...props} />;
   }, []);
 
   // Leaf 내에서 변화가 있을 때 기존에 만든 구문으로 변환시켜줌
@@ -65,8 +94,8 @@ const MyEditor: React.FC = () => {
         event.preventDefault();
         const [code]: any = Editor.nodes(editor, {
           match: (n) => {
-            return Element.isElement(n) && n.type === 'code'
-          }
+            return Element.isElement(n) && n.type === 'code';
+          },
         });
         Transforms.setNodes(
           editor,
@@ -77,7 +106,7 @@ const MyEditor: React.FC = () => {
       case '*':
         event.preventDefault();
         const [bullet]: any = Editor.nodes(editor, {
-          match: (n) => Element.isElement(n) && n.type === 'bullet'
+          match: (n) => Element.isElement(n) && n.type === 'bullet',
         });
         Transforms.setNodes(
           editor,
@@ -88,7 +117,7 @@ const MyEditor: React.FC = () => {
       case 'h':
         event.preventDefault();
         const [head]: any = Editor.nodes(editor, {
-          match: (n) => Element.isElement(n) && n.type === 'h1'
+          match: (n) => Element.isElement(n) && n.type === 'h1',
         });
         Transforms.setNodes(
           editor,
@@ -97,7 +126,7 @@ const MyEditor: React.FC = () => {
         );
         break;
     }
-  }
+  };
 
   return (
     <Slate
@@ -118,26 +147,26 @@ const MyEditor: React.FC = () => {
 // 에디터의 노드 구조를 변경
 const toggleFormat = (editor: Editor, format: string) => {
   const isActive = isFormatActive(editor, format);
-  
+
   Transforms.setNodes(
     editor,
     { [format]: isActive ? null : true },
     { match: Text.isText, split: true }
-  )
-}
+  );
+};
 
 // Node 객체에 string key 값으로 접근하기 위해 타입 선언
 type INode = {
-  [index: string]: any
-} & Node
+  [index: string]: any;
+} & Node;
 
 const isFormatActive = (editor: Editor, format: string) => {
   const [match]: any = Editor.nodes(editor, {
     match: (n: INode) => n[format] === true,
-    mode: 'all'
+    mode: 'all',
   });
-  return !!match
-}
+  return !!match;
+};
 
 // 에디터 초기 값
 const initialValue: Descendant[] = [
@@ -145,10 +174,10 @@ const initialValue: Descendant[] = [
     type: 'paragraph',
     children: [
       {
-        text: '미니 노션을 사용해봅시다.'
-      }
-    ]
-  }
+        text: '미니 노션을 사용해봅시다.',
+      },
+    ],
+  },
 ];
 
 // 블록 선택시 화면에 보여질 툴바
@@ -165,17 +194,29 @@ const Toolbar = () => {
     }
 
     // 블록 선택 되지 않았을 경우 || Editor가 포커스되지 않앗을 경우 || ?? Range.isCollapsed 이 부분을 잘 모르겠음 || 블록 선택된 구간이 비어있을 경우
-    if (!selection || !ReactEditor.isFocused(editor) || Range.isCollapsed(selection) || Editor.string(editor, selection) === '') {
+    if (
+      !selection ||
+      !ReactEditor.isFocused(editor) ||
+      Range.isCollapsed(selection) ||
+      Editor.string(editor, selection) === ''
+    ) {
       element.removeAttribute('style');
       return;
     }
-    
+
     const domSelection = window.getSelection();
     const domRange = domSelection?.getRangeAt(0);
     const rect = domRange?.getBoundingClientRect();
-    element.style.opacity = '1';;
-    element.style.top = `${(rect as DOMRect).top + window.pageYOffset - element.offsetHeight}px`;
-    element.style.left = `${(rect as DOMRect).left + window.pageXOffset - element.offsetWidth / 2 + (rect as DOMRect).width / 2}px`;
+    element.style.opacity = '1';
+    element.style.top = `${
+      (rect as DOMRect).top + window.pageYOffset - element.offsetHeight
+    }px`;
+    element.style.left = `${
+      (rect as DOMRect).left +
+      window.pageXOffset -
+      element.offsetWidth / 2 +
+      (rect as DOMRect).width / 2
+    }px`;
   });
 
   return (
@@ -187,7 +228,7 @@ const Toolbar = () => {
       </StyledMenu>
     </Portal>
   );
-}
+};
 
 interface IButtonFormat {
   format: string;
@@ -208,8 +249,6 @@ const FormatButton = ({ format, icon }: IButtonFormat) => {
       <Icon>{icon}</Icon>
     </Button>
   );
-}
-
-
+};
 
 export default MyEditor;
