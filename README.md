@@ -147,3 +147,113 @@ const NaverLoginButton: React.FC = () => {
 
 그래서 해당 위치에서 받은 access token을 서버로 전달하고, 서버에서는 이를 사용해 유저의 정보를 요청한 후, 다시 프론트에게 전달해 줍니다.
 
+
+## 2주차 (06.08 ~ 06.14)
+
+### 에디터 라이브러리
+
+<a href="https://docs.slatejs.org/">Slate.js</a> 라이브러리를 사용해서 텍스트 에디터 기능을 추가했습니다.
+
+`Slate.js` 는 완전한 커스터마이징을 제공하고 있고, 문서화 및 예제도 잘 나와있어서, 노션에 적합한 라이브러리라 판단했고, 이를 사용하면 마크다운 에디터 뿐 아니라 다양한 기능을 추가할 수 있을 것이라고 예상됩니다.
+
+### Slate.js 사용법
+
+`Slate.js` 의 기본적인 컨셉은 Block 과 Leaf 의 조작입니다.
+ * Block: 한 줄 또는 한 문단이라고 생각하시면 됩니다. 엔터를 누르지 않고(또는 shift + 엔터) 글을 쓸 때, 여러 줄로 나뉘어 지는 것은 기본적으로 한 Block 이고, 엔터를 입력해서 Block을 끝낼 수 있습니다.
+ * Leaf: Leaf 는 한 Block 내에 존재할 수도 있고, 여러 Block에 걸쳐서 존재할 수도 있지만, 기본적으로는 한 Block 내에서 특정 부분을 Leaf 라고 합니다. 
+    > 이것은 블록일까요? **리프**일까요?
+    
+    위의 문장에서 전체는 한 Block 이라고 말할 수 있고, 굴게 표시된 **리프** 부분은 Block 내의 Leaf 라고 할 수 있습니다. 물론 굴게 처리되지 않은 부분도 모두 Leaf 입니다.
+
+위의 기본 컨셉을 가지고, 일단 Block과 Leaf를 어떻게 구성할 것인지에 대해 사용자가 정해주어야 합니다.
+* Block.tsx
+
+    ```tsx
+    const Block = ({ attributes, children, element }: RenderElementProps) => {
+    switch (element.type) {
+        case 'code':
+        return <pre {...attributes}>{children}</pre>;
+        case 'bullet':
+        return (
+            <ul>
+            <li {...attributes}>{children}</li>
+            </ul>
+        );
+        case 'h1':
+        return <h1 {...attributes}>{children}</h1>;
+        case 'h2':
+        return <h2 {...attributes}>{children}</h2>;
+        case 'h3':
+        return <h3 {...attributes}>{children}</h3>;
+        default:
+        return <p {...attributes}>{children}</p>;
+    }
+    };
+    ```
+
+    저는 아무 처리도 하지 않은 디폴트 블록은 `<p>` 태그 내에 보여주도록 설정했습니다. 추가로 `code` 블록과 `bullet` 블록, `title` 블록을 만들었습니다.
+
+* Leaf.tsx
+
+    ```tsx
+    const Leaf = ({ attributes, children, leaf }: RenderLeafProps) => {
+        if (leaf.bold) {
+            children = <strong>{children}</strong>;
+        }
+
+        if (leaf.italic) {
+            children = <em>{children}</em>;
+        }
+
+        if (leaf.underlined) {
+            children = <u>{children}</u>;
+        }
+
+        return <span {...attributes}>{children}</span>;
+    };
+    ```
+
+    리프의 경우 기본적으로 `<span>` 태그 내에 보여주도록 했고, 타입이 bold, italic, underlined 일 경우 이에 맞는 효과를 적용하도록 했습니다.
+
+에디터 컴포넌트는 아래와 같이 생성했습니다.
+
+```tsx
+const MyEditor: React.FC = () => {
+  const editor = useMemo(() => withHistory(withReact(createEditor())), []);
+  const [value, setValue] = useState<Descendant[]>(initialValue);
+
+  // Block 단위의 변화가 있을 때 기존에 만든 구문으로 변환시켜줌
+  const renderElement = useCallback((props: RenderElementProps) => {
+    return <Block {...props} />;
+  }, []);
+
+  // Leaf 내에서 변화가 있을 때 기존에 만든 구문으로 변환시켜줌
+  const renderLeaf = useCallback((props: RenderLeafProps) => {
+    return <Leaf {...props} />;
+  }, []);
+
+  // 키다운 이벤트
+  const onKeyDownHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    // ...
+  };
+
+  return (
+    <Slate
+      editor={editor}
+      value={value}
+      onChange={(newValue) => setValue(newValue)}
+    >
+      <Toolbar />
+      <StyledEditable
+        renderElement={renderElement}
+        renderLeaf={renderLeaf}
+        onKeyDown={onKeyDownHandler}
+      />
+    </Slate>
+  );
+};
+```
+
+### Slate.js 사용 이슈
+
+webpack 설정을 혼자 해서 진행했을 때, Generate가 제대로 작동하지 않아서, 에디터 Block 또는 Leaf의 타입 체크를 하지 못하는 상황이 발생했습니다. CRA로 시작한 프로젝트에서는 정상 동작한 것으로 보아 webpack 또는 babel 설정에서 다른 점이 있을 것이라 추측하고 있습니다.
