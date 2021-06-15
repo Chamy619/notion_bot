@@ -1,12 +1,12 @@
 import React from 'react';
-import style from 'styled-components';
+import styled from 'styled-components';
 import GoogleLoginButton from './GoogleLoginButton';
 import NaverLoginButton from './NaverLoginButton';
 
-const Container = style.div`
-    & + & {
-        margin-top: 0.5em;
-    }
+const Container = styled.div`
+  & + & {
+      margin-top: 0.5em;
+  }
 `;
 
 interface Props {

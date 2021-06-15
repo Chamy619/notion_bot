@@ -1,9 +1,9 @@
 import React from 'react';
 import MyEditor from './MyEditor';
 import SideMenu from '../SideMenu/SideMenu';
-import style from 'styled-components';
+import styled from 'styled-components';
 
-const Container = style.div`
+const Container = styled.div`
   width: 100%;
   display: flex;
 `;

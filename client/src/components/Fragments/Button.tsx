@@ -1,5 +1,5 @@
 import React from 'react';
-import style from 'styled-components';
+import styled from 'styled-components';
 
 type Button = {
   size: 'small' | 'medium' | 'large';
@@ -8,7 +8,7 @@ type Button = {
   onClick: () => void;
 };
 
-const StyledButton = style.div<Button>`
+const StyledButton = styled.div<Button>`
     width: ${(props) =>
       (props.size === 'small' && 6) ||
       (props.size === 'medium' && 12) ||
